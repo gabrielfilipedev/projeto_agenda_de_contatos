@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agenda de Contatos</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      input[type=text], input[type=tel] {
+        padding: 8px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Agenda de Contatos</h1>
+    <form>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone" required>
+      <button type="button" onclick="adicionarContato()">Cadastrar</button>
+    </form>
+    <br>
+    <table id="tabela-contatos">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Telefone</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <script>
+      // Array para armazenar os contatos
+      var contatos = [];
+
+      function adicionarContato() {
+        // Obtém os valores dos campos do formulário
+        var nome = document.getElementById("nome").value;
+        var telefone = document.getElementById("telefone").value;
+
+        // Adiciona o contato ao array
+        contatos.push({ nome: nome, telefone: telefone });
+
+        // Atualiza a tabela de contatos
+        atualizarTabelaContatos();
+
+        // Limpa os campos do formulário
+        document.getElementById("nome").value = "";
+        document.getElementById("telefone").value = "";
+      }
+
+      function atualizarTabelaContatos() {
+        // Obtém a tabela de contatos
+        var tabela = document.getElementById("tabela-contatos");
+
+        // Remove os contatos existentes da tabela
+        var linhas = tabela.getElementsByTagName("tr");
+        for (var i = linhas.length - 1; i > 0; i--) {
+          tabela.deleteRow(i);
+        }
+
+        // Adiciona os contatos da lista na tabela
+        for (var i = 0; i < contatos.length; i++) {
+          var contato = contatos[i];
+
+          var linha = tabela.insertRow(-1);
+          var colunaNome = linha.insertCell(0);
+          var colunaTelefone = linha.insertCell(1);
+
+          colunaNome.innerHTML = contato.nome;
+          colunaTelefone.innerHTML = contato.telefone;
+        }
+      }
+    </script>
+  </body>
+</html>
